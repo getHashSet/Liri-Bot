@@ -7,3 +7,4 @@ Liri is a CLI bot *(command line interface)* that will help you find weather dat
 
 ## Commands
 "Liri how's the weather today?"
+"Liri whats the temperature in Tucson?"
