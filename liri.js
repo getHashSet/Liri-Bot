@@ -15,6 +15,7 @@ require("dotenv").config();
 //////////////////////////////////////////////
 
 let spotify = new Spotify(keys.spotify);
+let omdbkey = "54a70c14";
 
 //////////////////////////////////////////////
 ///////////////// inquirer
@@ -77,8 +78,40 @@ const spotifyThisSong = () => {
         spotifySearchFunction(userInputSong);
     });
 };
+    
+//////////////////////////////////////////////
+///////////////// movieThis 
+//////////////////////////////////////////////
 const movieThis = () => {
-    console.log(`movieThis() fucntion called.`);
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "userInput",
+            message: "Name a movie!"
+        }
+    ]).then(movieData => {
+        // What did the user type?
+        let movieTitle = movieData.userInput;
+        // Make sure the input wasnt blank.
+        movieTitle.length < 1 ? movieTitle = "Wall e" : movieTitle = movieTitle;
+        // Trim and replace for the URL.
+        movieTitle.trim().replace(/" "/g, "+");
+
+        // Now lets axios that beast
+        axios.get(`http://www.omdbapi.com/?t=${movieTitle}&apikey=${omdbkey}`)
+        .then(function (response) {
+        // handle success
+        console.log(response.data);
+        })
+        .catch(function (error) {
+        // handle error
+        console.log(error);
+        })
+        .finally(function () {
+        // always executed
+        });
+    });
 };
 const doWhatItSays = () => {
     console.log(``);
