@@ -71,18 +71,44 @@ const spotifyThisSong = () => {
 
         // default song if input field was left blank.
         songAnswer.inputData.length < 1 ?
-        userInputSong = "Ace of Base" :
-        userInputSong = songAnswer.inputData;
+            userInputSong = "Ace of Base" :
+            userInputSong = songAnswer.inputData;
 
         //spotifySearch();
         spotifySearchFunction(userInputSong);
     });
 };
-    
+
 //////////////////////////////////////////////
 ///////////////// movieThis 
 //////////////////////////////////////////////
 const movieThis = () => {
+
+    //////////////////////////////////////////////
+    ///////////////// Movie Object Constructor
+    //////////////////////////////////////////////
+    function MovieObj(_title, _year, _imdbRating, _rtRating, _producedIn, _language, _plot, _actors) {
+        this.title = _title;
+        this.year = _year;
+        this.imdbRating = _imdbRating;
+        this.rtRating = _rtRating;
+        this.producedIn = _producedIn;
+        this.language = _language;
+        this.plot = _plot;
+        this.actors = _actors;
+
+        this.printOut = () => {
+            console.log(`----------------------------`);
+            console.log(`Title: ${this.title}`);
+            console.log(`Release Year: ${this.year}`);
+            console.log(`IMDB Rating: ${this.imdbRating}`);
+            console.log(`Rotten Tomatos: ${this.rtRating}`);
+            console.log(`Produced: ${this.producedIn}`);
+            console.log(`Language: ${this.language}`);
+            console.log(`Plot: ${this.plot}`);
+            console.log(`Actors: ${this.actors}`);
+        };
+    };
 
     inquirer.prompt([
         {
@@ -100,27 +126,25 @@ const movieThis = () => {
 
         // Now lets axios that beast
         axios.get(`http://www.omdbapi.com/?t=${movieTitle}&apikey=${omdbkey}`)
-        .then(function (response) {
-        // handle success
-        console.log(response.data);
-        })
-        .catch(function (error) {
-        // handle error
-        console.log(error);
-        })
-        .finally(function () {
-        // always executed
-        });
+            .then(function (response) {
+                // handle success
+                let thisMovie = response.data;
+                //console.log(thisMovie);
+                let result = new MovieObj(thisMovie.Title, thisMovie.Year, thisMovie.imdbRating, thisMovie.Ratings[1].Value, thisMovie.Production, thisMovie.Language, thisMovie.Plot, thisMovie.Actors);
+                result.printOut();
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
     });
 };
 const doWhatItSays = () => {
-    console.log(``);
-    console.log(`-------------------------------------`);
     fileSystem.readFile("./random.txt", "UTF-8", (err, data) => {
-        let song = data;
-        console.log(song);
-        spotifySearchFunction("wild wild west");
-        console.log(`-------------------------------------`);
+        spotifySearchFunction(data.slice(data.indexOf(",")+1));
     });
 };
 
