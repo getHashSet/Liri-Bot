@@ -19,6 +19,8 @@ Using terminal you can perform a series of commands that will return media infor
 
 [npm](#npm) 
 
+[API](#api)
+
 ## Requirements 
 
 This project requires the following applications to launch.
@@ -108,6 +110,10 @@ How to install this project and the steps you’ll need to take to download the 
 
 ## npm
 
+npm common commands used in this project - 
+
+`npm init` `npm install`
+
 Before launching the project perform the following commands and update the keys to access the corresponding information for omdb and Spotify. (See [API key section](#api-keys)).
 
 ```javascript
@@ -128,5 +134,10 @@ exports.spotify = {
 
 those files are refrence from the .env file that is not included in the GitHub project.
 
+---
+
+## API
+
+This project uses two different API calls using [axios](https://www.npmjs.com/package/axios) npm package. This allows API interactions on the server.
 
 [Back to top](#)
